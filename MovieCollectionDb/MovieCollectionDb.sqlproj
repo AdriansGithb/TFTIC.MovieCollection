@@ -75,4 +75,7 @@
   <ItemGroup>
     <RefactorLog Include="MovieCollectionDb.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment1.sql" />
+  </ItemGroup>
 </Project>
