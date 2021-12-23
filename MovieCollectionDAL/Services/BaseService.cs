@@ -24,7 +24,7 @@ namespace MovieCollectionDAL.Services
         public virtual TResult GetById(int Id)
         {
             Connection connection = new Connection(_connectionString);
-            string Query = "SELECT * FROM " + _tableName + " WHERE Id = @id";
+            string Query = "SELECT * FROM " + _tableName + " WHERE Id"+_tableName+" = @id";
             Command cmd = new Command(Query, false);
             cmd.AddParameter("Id", Id);
 
@@ -43,7 +43,7 @@ namespace MovieCollectionDAL.Services
         public virtual bool Delete(int Id)
         {
             Connection connection = new Connection(_connectionString);
-            string Query = "DELETE FROM [" + _tableName + "] WHERE Id = @id";
+            string Query = "DELETE FROM [" + _tableName + "] WHERE Id"+_tableName+" = @id";
             Command cmd = new Command(Query, false);
             cmd.AddParameter("id", Id);
 

@@ -9,8 +9,11 @@ namespace MovieCollectionDAL.Repositories
 {
     public interface ICountryRepository
     {
-        bool Create(Country c);
-        bool Update(Country c);
+       bool Create(string name);
+       bool Update(Country c);
+       bool Delete(int Id);
+       IEnumerable<Country> GetAll();
+       Country GetById(int Id);
 
     }
 }

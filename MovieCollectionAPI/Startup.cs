@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MovieCollectionDAL.Repositories;
+using MovieCollectionDAL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,15 @@ namespace MovieCollectionAPI
         {
 
             services.AddControllers();
+
+            services.AddScoped<IAppUserRepository, AppUserService>();
+            services.AddScoped<IArtistRepository, ArtistService>();
+            services.AddScoped<IAudienceRepository, AudienceService>();
+            services.AddScoped<ICommentRepository, CommentService>();
+            services.AddScoped<ICountryRepository, CountryService>();
+            services.AddScoped<IGenreRepository, GenreService>();
+            services.AddScoped<IMovieRepository, MovieService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieCollectionAPI", Version = "v1" });

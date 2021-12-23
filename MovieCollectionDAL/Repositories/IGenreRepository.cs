@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionDAL.Repositories
 {
-    interface IGenreRepository
+    public interface IGenreRepository
     {
         bool Create(Genre g);
         bool Update(Genre g);

@@ -27,13 +27,13 @@ namespace MovieCollectionDAL.Services
         }
 
 
-        public bool Create(Country c)
+        public bool Create(string name)
         {
             Connection connection = new Connection(_connectionString);
             string sql = "INSERT INTO Country (C_Name) VALUES (@name)";
             Command cmd = new Command(sql, false);
 
-            cmd.AddParameter("name", c.Name);
+            cmd.AddParameter("name", name);
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }

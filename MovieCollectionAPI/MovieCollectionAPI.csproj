@@ -9,9 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Tools\" />
+    <ProjectReference Include="..\MovieCollectionDAL\MovieCollectionDAL.csproj" />
   </ItemGroup>
 
 </Project>
