@@ -9,8 +9,11 @@ namespace MovieCollectionDAL.Repositories
 {
     public interface IGenreRepository
     {
-        bool Create(Genre g);
+        bool Create(string label);
         bool Update(Genre g);
+        bool Delete(int Id);
+        IEnumerable<Genre> GetAll();
+        Genre GetById(int Id);
 
     }
 }

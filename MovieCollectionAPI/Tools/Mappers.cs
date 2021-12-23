@@ -47,6 +47,25 @@ namespace MovieCollectionAPI.Tools
         }
 
         #endregion
+        #region Genre
+        public static WEB.Genre toWeb(this DAL.Genre g)
+        {
+            return new WEB.Genre
+            {
+                IdGenre = g.IdGenre,
+                Label = g.Label
+            };
+        }
+        public static DAL.Genre toDal(this WEB.Genre g)
+        {
+            return new DAL.Genre
+            {
+                IdGenre = g.IdGenre,
+                Label = g.Label
+            };
+        }
+
+        #endregion
 
 
     }

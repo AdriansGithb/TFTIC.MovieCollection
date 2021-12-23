@@ -27,13 +27,13 @@ namespace MovieCollectionDAL.Services
         }
 
 
-        public bool Create(Genre g)
+        public bool Create(string label)
         {
             Connection connection = new Connection(_connectionString);
             string sql = "INSERT INTO Genre (G_Label) VALUES (@label)";
             Command cmd = new Command(sql, false);
 
-            cmd.AddParameter("label", g.Label);
+            cmd.AddParameter("label", label);
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }
