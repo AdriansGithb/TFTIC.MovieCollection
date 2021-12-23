@@ -71,6 +71,9 @@
     <Build Include="Tables\Production.sql" />
     <Build Include="Tables\Direction.sql" />
     <Build Include="Tables\Acting.sql" />
+    <Build Include="Tables\AppUser.sql" />
+    <Build Include="Tables\Salt.sql" />
+    <Build Include="Tables\Comment.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MovieCollectionDb.refactorlog" />
