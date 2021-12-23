@@ -28,6 +28,25 @@ namespace MovieCollectionAPI.Tools
         }
 
         #endregion
+        #region Audience
+        public static WEB.Audience toWeb(this DAL.Audience a)
+        {
+            return new WEB.Audience
+            {
+                IdAudience = a.IdAudience,
+                Label = a.Label
+            };
+        }
+        public static DAL.Audience toDal(this WEB.Audience a)
+        {
+            return new DAL.Audience
+            {
+                IdAudience = a.IdAudience,
+                Label = a.Label
+            };
+        }
+
+        #endregion
 
 
     }
