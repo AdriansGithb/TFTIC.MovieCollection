@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieCollectionDAL.Entities
+namespace MovieCollectionAPI.Models
 {
-    public class Movie
+    public class MovieForm
     {
-        public int IdMovie { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public int ReleaseYear { get; set; }
         public string Synopsys { get; set; }
         public string TrailerLink { get; set; }
-        public bool IsDeleted { get; set; }
-        public int? IdCountry { get; set; }
+        public int? OriginCountryId { get; set; }
         public int? IdAudience { get; set; }
+
     }
 }

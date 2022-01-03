@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MovieCollectionDAL.Repositories;
 
 namespace MovieCollectionAPI.Tools
 {
@@ -65,6 +66,46 @@ namespace MovieCollectionAPI.Tools
             };
         }
 
+        #endregion
+        #region Movie
+        public static WEB.Movie toWeb(this DAL.Movie m, ICountryRepository _cntryRepo = null, IAudienceRepository _audRepo = null)
+        {
+            return new WEB.Movie
+            {
+                IdMovie = m.IdMovie,
+                Title = m.Title,
+                ReleaseYear = m.ReleaseYear,
+                Synopsys = m.Synopsys,
+                TrailerLink = m.TrailerLink,
+                IsDeleted = m.IsDeleted,
+                OriginCountry = (_cntryRepo != null && m.IdCountry != null) ? _cntryRepo.GetById((int)m.IdCountry).Name : "",
+                Audience = (_audRepo != null && m.IdAudience != null) ? _audRepo.GetById((int)m.IdAudience).Label : ""
+            };
+        }
+        //public static DAL.Movie toDal(this WEB.Movie m)
+        //{
+        //    return new DAL.Movie
+        //    {
+        //        IdMovie = m.IdMovie,
+        //        Title = m.Title,
+        //        ReleaseYear = m.ReleaseYear,
+        //        Synopsys = m.Synopsys,
+        //        TrailerLink = m.TrailerLink,
+        //        IsDeleted = m.IsDeleted,
+        //    };
+        //}
+        public static DAL.Movie toDal(this WEB.MovieForm m)
+        {
+            return new DAL.Movie
+            {
+                Title = m.Title,
+                ReleaseYear = m.ReleaseYear,
+                Synopsys = m.Synopsys,
+                TrailerLink = m.TrailerLink,
+                IdCountry = m.OriginCountryId,
+                IdAudience = m.IdAudience
+            };
+        }
         #endregion
 
 

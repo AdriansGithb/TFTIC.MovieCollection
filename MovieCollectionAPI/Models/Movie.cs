@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieCollectionDAL.Entities
+namespace MovieCollectionAPI.Models
 {
     public class Movie
     {
@@ -14,7 +13,9 @@ namespace MovieCollectionDAL.Entities
         public string Synopsys { get; set; }
         public string TrailerLink { get; set; }
         public bool IsDeleted { get; set; }
-        public int? IdCountry { get; set; }
-        public int? IdAudience { get; set; }
+        public string OriginCountry { get; set; }
+        public string Audience { get; set; }
+
+
     }
 }

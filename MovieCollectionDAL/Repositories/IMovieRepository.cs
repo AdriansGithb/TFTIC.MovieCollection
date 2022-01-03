@@ -10,7 +10,11 @@ namespace MovieCollectionDAL.Repositories
     public interface IMovieRepository
     {
         bool Create(Movie m);
-        bool Update(Movie m);
+        bool Update(int idMovie, Movie m);
+        bool Delete(int Id);
+        IEnumerable<Movie> GetAll();
+        IEnumerable<Movie> GetAllNotDeleted();
+        Movie GetById(int Id);
 
     }
 }
