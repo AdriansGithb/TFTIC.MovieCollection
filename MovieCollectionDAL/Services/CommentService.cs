@@ -26,10 +26,10 @@ namespace MovieCollectionDAL.Services
                 IdMovie = (int)reader["Com_IdMovie"],
                 CreatedBy = (string)reader["Com_CreatedBy"],
                 CreationDate = (DateTime)reader["Com_CreationDate"],
-                LastModifBy = (string)reader["Com_LastModifBy"],
-                LastModifDate = (DateTime)reader["Com_LastModifDate"],
-                DeletedBy = (string)reader["Com_DeletedBy"],
-                DeletionDate = (DateTime)reader["Com_DeletionDate"]
+                LastModifBy = (reader["Com_LastModifBy"] != DBNull.Value) ? (string)reader["Com_LastModifBy"] : "",
+                LastModifDate = (reader["Com_LastModifDate"] != DBNull.Value) ? (DateTime)reader["Com_LastModifDate"] : null,
+                DeletedBy = (reader["Com_DeletedBy"] != DBNull.Value) ? (string)reader["Com_DeletedBy"] : "",
+                DeletionDate = (reader["Com_DeletionDate"] != DBNull.Value) ? (DateTime)reader["Com_DeletionDate"] : null
             };
         }
 

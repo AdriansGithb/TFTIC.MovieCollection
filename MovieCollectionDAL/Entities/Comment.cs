@@ -14,8 +14,8 @@ namespace MovieCollectionDAL.Entities
         public string CreatedBy { get; set; }
         public DateTime CreationDate { get; set; }
         public string LastModifBy { get; set; }
-        public DateTime LastModifDate { get; set; }
+        public DateTime? LastModifDate { get; set; }
         public string DeletedBy { get; set; }
-        public DateTime DeletionDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
     }
 }
