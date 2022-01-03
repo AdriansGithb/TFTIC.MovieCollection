@@ -11,6 +11,6 @@ namespace MovieCollectionDAL.Entities
         public int IdArtist { get; set; }
         public string Name { get; set; }
         public string FirstName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }

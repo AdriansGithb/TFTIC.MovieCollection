@@ -25,7 +25,7 @@ namespace MovieCollectionDAL.Services
                 IdArtist = (int)reader["IdArtist"],
                 Name = (string)reader["Art_Name"],
                 FirstName = (string)reader["Art_FirstName"],
-                BirthDate = (DateTime)reader["Art_BirthDate"]
+                BirthDate = (reader["Art_BirthDate"] != DBNull.Value) ? (DateTime)reader["Art_BirthDate"] : null
             };
         }
 
