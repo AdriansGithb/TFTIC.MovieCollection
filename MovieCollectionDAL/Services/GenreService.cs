@@ -49,5 +49,14 @@ namespace MovieCollectionDAL.Services
             return connection.ExecuteNonQuery(cmd) == 1;
         }
 
+        public IEnumerable<Genre> GetByFilmId(int IdFilm)
+        {
+            Connection connection = new Connection(_connectionString);
+            string Query = "SELECT * FROM Genre WHERE IdGenre IN(SELECT MG_IdGenre FROM Movie_Genre WHERE MG_IdMovie = @idFilm)";
+            Command cmd = new Command(Query, false);
+            cmd.AddParameter("IdFilm", IdFilm);
+
+            return connection.ExecuteReader(cmd, Converter);
+        }
     }
 }

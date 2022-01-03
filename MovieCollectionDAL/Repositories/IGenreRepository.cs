@@ -14,6 +14,6 @@ namespace MovieCollectionDAL.Repositories
         bool Delete(int Id);
         IEnumerable<Genre> GetAll();
         Genre GetById(int Id);
-
+        IEnumerable<Genre> GetByFilmId(int IdFilm);
     }
 }

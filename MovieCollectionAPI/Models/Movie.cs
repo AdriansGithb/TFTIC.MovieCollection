@@ -15,7 +15,7 @@ namespace MovieCollectionAPI.Models
         public bool IsDeleted { get; set; }
         public string OriginCountry { get; set; }
         public string Audience { get; set; }
-
+        public IEnumerable<string> Genres { get; set; }
 
     }
 }

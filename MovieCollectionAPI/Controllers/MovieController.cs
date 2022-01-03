@@ -35,7 +35,7 @@ namespace MovieCollectionAPI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_movieRepo.GetAllNotDeleted().Select(x => x.toWeb(_countryRepo, _audienceRepo)));
+            return Ok(_movieRepo.GetAllNotDeleted().Select(x => x.toWeb(_countryRepo, _audienceRepo, _genreRepo)));
         }
         /// <summary>
         /// Gets one movie by id
@@ -45,7 +45,7 @@ namespace MovieCollectionAPI.Controllers
         [HttpGet("{Id}")]
         public IActionResult GetById(int Id)
         {
-            return Ok(_movieRepo.GetById(Id).toWeb(_countryRepo, _audienceRepo));
+            return Ok(_movieRepo.GetById(Id).toWeb(_countryRepo, _audienceRepo, _genreRepo));
         }
         /// <summary>
         /// Creates a new movie

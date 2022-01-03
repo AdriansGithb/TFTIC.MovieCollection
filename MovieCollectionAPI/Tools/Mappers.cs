@@ -68,7 +68,7 @@ namespace MovieCollectionAPI.Tools
 
         #endregion
         #region Movie
-        public static WEB.Movie toWeb(this DAL.Movie m, ICountryRepository _cntryRepo = null, IAudienceRepository _audRepo = null)
+        public static WEB.Movie toWeb(this DAL.Movie m, ICountryRepository _cntryRepo = null, IAudienceRepository _audRepo = null, IGenreRepository _gnrRepo = null)
         {
             return new WEB.Movie
             {
@@ -79,7 +79,8 @@ namespace MovieCollectionAPI.Tools
                 TrailerLink = m.TrailerLink,
                 IsDeleted = m.IsDeleted,
                 OriginCountry = (_cntryRepo != null && m.IdCountry != null) ? _cntryRepo.GetById((int)m.IdCountry).Name : "",
-                Audience = (_audRepo != null && m.IdAudience != null) ? _audRepo.GetById((int)m.IdAudience).Label : ""
+                Audience = (_audRepo != null && m.IdAudience != null) ? _audRepo.GetById((int)m.IdAudience).Label : "",
+                Genres = (_gnrRepo != null) ? _gnrRepo.GetByFilmId(m.IdMovie).Select(x=>x.Label) : new List<string>()
             };
         }
         //public static DAL.Movie toDal(this WEB.Movie m)
