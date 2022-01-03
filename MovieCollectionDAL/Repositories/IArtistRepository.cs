@@ -9,6 +9,6 @@ namespace MovieCollectionDAL.Repositories
         bool Delete(int id);
         IEnumerable<Artist> GetAll();
         Artist GetById(int Id);
-        bool Update(Artist a);
+        bool Update(int idArtist, Artist a);
     }
 }

@@ -74,7 +74,7 @@ namespace MovieCollectionAPI.Controllers
             if (_movieRepo.GetById(Id) == null)
             {
                 _movieRepo.Create(form.toDal());
-                return Ok("Pays créé");
+                return Ok("Film créé");
             }
 
             if (!_movieRepo.Update(Id, form.toDal()))

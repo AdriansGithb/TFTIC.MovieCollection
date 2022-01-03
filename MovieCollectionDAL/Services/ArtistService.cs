@@ -42,7 +42,7 @@ namespace MovieCollectionDAL.Services
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }
-        public bool Update(Artist a)
+        public bool Update(int idArtist,Artist a)
         {
             Connection connection = new Connection(_connectionString);
             string sql = "UPDATE Artist SET Art_Name = @name, Art_FirstName = @fname, Art_BirthDate = @bdate WHERE IdArtist = @id";
@@ -51,7 +51,7 @@ namespace MovieCollectionDAL.Services
             cmd.AddParameter("name", a.Name);
             cmd.AddParameter("fname", a.FirstName);
             cmd.AddParameter("bdate", a.BirthDate);
-            cmd.AddParameter("id", a.IdArtist);
+            cmd.AddParameter("id", idArtist);
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }

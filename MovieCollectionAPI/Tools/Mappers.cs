@@ -108,6 +108,28 @@ namespace MovieCollectionAPI.Tools
             };
         }
         #endregion
+        #region Artist
+        public static WEB.Artist toWeb(this DAL.Artist a)
+        {
+            return new WEB.Artist
+            {
+                IdArtist = a.IdArtist,
+                Name = a.Name,
+                FirstName = a.FirstName,
+                BirthDate = a.BirthDate,
+            };
+        }
+        public static DAL.Artist toDal(this WEB.ArtistForm a)
+        {
+            return new DAL.Artist
+            {
+                Name = a.Name,
+                FirstName = a.FirstName,
+                BirthDate = a.BirthDate
+            };
+        }
+        #endregion
+
 
 
     }

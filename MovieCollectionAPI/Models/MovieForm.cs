@@ -9,6 +9,7 @@ namespace MovieCollectionAPI.Models
     public class MovieForm
     {
         [Required]
+        [MaxLength(200)]
         public string Title { get; set; }
         [Required]
         public int ReleaseYear { get; set; }
