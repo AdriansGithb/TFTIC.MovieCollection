@@ -55,7 +55,7 @@ namespace MovieCollectionDAL.Services
             if (string.IsNullOrWhiteSpace(oldCharacter) || string.IsNullOrWhiteSpace(newCharacter))
                 return false;
             Connection connection = new Connection(_connectionString);
-            string sql = "UPDATE Acting SET Act_Character = @newCharacter WHERE Act_IdArtist = @idArtist AND Act_IdMovie = idMovie AND Act_Character = @oldCharacter";
+            string sql = "UPDATE Acting SET Act_Character = @newCharacter WHERE Act_IdArtist = @idArtist AND Act_IdMovie = @idMovie AND Act_Character = @oldCharacter";
             Command cmd = new Command(sql, false);
 
             cmd.AddParameter("idArtist", idArtist);
@@ -74,7 +74,7 @@ namespace MovieCollectionDAL.Services
             cmd.AddParameter("idArtist", idArtist);
             cmd.AddParameter("idMovie", idMovie);
 
-            return connection.ExecuteNonQuery(cmd) == 1;
+            return connection.ExecuteNonQuery(cmd) >= 0;
         }
         public bool DeleteActorOfOneMovie_OneCharacter(int idArtist, string character, int idMovie)
         {
@@ -96,7 +96,7 @@ namespace MovieCollectionDAL.Services
 
             cmd.AddParameter("idArtist", idArtist);
 
-            return connection.ExecuteNonQuery(cmd) == 1;
+            return connection.ExecuteNonQuery(cmd) >= 0;
         }
         public IEnumerable<Actor> GetAllActorsOfOneMovie(int idMovie)
         {

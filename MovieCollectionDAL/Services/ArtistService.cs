@@ -91,7 +91,7 @@ namespace MovieCollectionDAL.Services
 
             cmd.AddParameter("idArtist", idArtist);
 
-            return connection.ExecuteNonQuery(cmd) == 1;
+            return connection.ExecuteNonQuery(cmd) >= 0;
         }
         public IEnumerable<Artist> GetAllProducers()
         {
@@ -152,7 +152,7 @@ namespace MovieCollectionDAL.Services
 
             cmd.AddParameter("idArtist", idArtist);
 
-            return connection.ExecuteNonQuery(cmd) == 1;
+            return connection.ExecuteNonQuery(cmd) >= 0;
         }
         public IEnumerable<Artist> GetAllDirectors()
         {

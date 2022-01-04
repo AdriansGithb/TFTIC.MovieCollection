@@ -129,6 +129,35 @@ namespace MovieCollectionAPI.Tools
             };
         }
         #endregion
+        #region Actor
+        public static WEB.Actor toWeb(this DAL.Actor a, IArtistRepository _artRepo = null)
+        {
+            DAL.Artist artist = _artRepo.GetById(a.IdArtist);
+            return new WEB.Actor
+            {
+                IdArtist = a.IdArtist,
+                Name = artist.Name,
+                FirstName = artist.FirstName,
+                BirthDate = artist.BirthDate,
+                IdMovie = a.IdMovie,
+                Character = a.Character
+                //Characters = new Dictionary<int, List<string>>
+                //{
+                //    { a.IdMovie, new List<string> {a.Character } }
+                //}
+            };
+        }
+        //public static DAL.Artist toDal(this WEB.ArtistForm a)
+        //{
+        //    return new DAL.Artist
+        //    {
+        //        Name = a.Name,
+        //        FirstName = a.FirstName,
+        //        BirthDate = a.BirthDate
+        //    };
+        //}
+        #endregion
+
 
 
 
