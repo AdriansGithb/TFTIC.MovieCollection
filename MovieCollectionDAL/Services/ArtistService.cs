@@ -83,7 +83,7 @@ namespace MovieCollectionDAL.Services
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }
-        public bool DeleteProducerOfAllMovies(int idArtist)
+        public bool DeleteProducer_AllHisMovies(int idArtist)
         {
             Connection connection = new Connection(_connectionString);
             string sql = "DELETE FROM Production WHERE P_IdArtist = @idArtist";
@@ -144,10 +144,10 @@ namespace MovieCollectionDAL.Services
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }
-        public bool DeleteDirectorOfAllMovies(int idArtist)
+        public bool DeleteDirector_AllHisMovies(int idArtist)
         {
             Connection connection = new Connection(_connectionString);
-            string sql = "DELETE FROM Direction WHERE P_IdArtist = @idArtist";
+            string sql = "DELETE FROM Direction WHERE D_IdArtist = @idArtist";
             Command cmd = new Command(sql, false);
 
             cmd.AddParameter("idArtist", idArtist);

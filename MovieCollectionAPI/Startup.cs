@@ -38,6 +38,7 @@ namespace MovieCollectionAPI
             services.AddScoped<ICountryRepository, CountryService>();
             services.AddScoped<IGenreRepository, GenreService>();
             services.AddScoped<IMovieRepository, MovieService>();
+            services.AddScoped<IActorRepository, ActorService>();
 
             services.AddSwaggerGen(c =>
             {

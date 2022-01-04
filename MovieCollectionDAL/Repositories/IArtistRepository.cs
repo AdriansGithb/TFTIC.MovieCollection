@@ -16,7 +16,7 @@ namespace MovieCollectionDAL.Repositories
         #endregion
         #region Producer
         bool AddProducerToMovie(int idArtist, int idMovie);
-        bool DeleteProducerOfAllMovies(int idArtist);
+        bool DeleteProducer_AllHisMovies(int idArtist);
         bool DeleteProducerOfOneMovie(int idArtist, int idMovie);
         IEnumerable<Artist> GetAllProducers();
         IEnumerable<Artist> GetAllProducersOfOneMovie(int idMovie);
@@ -24,7 +24,7 @@ namespace MovieCollectionDAL.Repositories
         #endregion
         #region Director
         bool AddDirectorToMovie(int idArtist, int idMovie);
-        bool DeleteDirectorOfAllMovies(int idArtist);
+        bool DeleteDirector_AllHisMovies(int idArtist);
         bool DeleteDirectorOfOneMovie(int idArtist, int idMovie);
         IEnumerable<Artist> GetAllDirectors();
         IEnumerable<Artist> GetAllDirectorsOfOneMovie(int idMovie);

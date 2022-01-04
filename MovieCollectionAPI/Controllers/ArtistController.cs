@@ -19,7 +19,7 @@ namespace MovieCollectionAPI.Controllers
         {
             _artRepo = artRepo;
         }
-
+        #region Artist
         /// <summary>
         /// Get all artists registered in db
         /// </summary>
@@ -85,6 +85,137 @@ namespace MovieCollectionAPI.Controllers
             _artRepo.Delete(Id);
             return Ok();
         }
+        #endregion
+        #region Producer
+        /// <summary>
+        /// Get all producers registered in db
+        /// </summary>
+        /// <returns>a IEnumerable containing artist objects with name, firstname and birthdate</returns>
+        [HttpGet("/producers")]
+        public IActionResult GetAllProducers()
+        {
+            return Ok(_artRepo.GetAllProducers().Select(x => x.toWeb()));
+        }
+        /// <summary>
+        /// Gets all producers of a movie
+        /// </summary>
+        /// <param name="IdMovie">the unique movie id</param>
+        /// <returns>a IEnumerable containing artist objects with name, firstname and birthdate</returns>
+        [HttpGet("/producer/{IdMovie}")]
+        public IActionResult GetProducersByMovie(int IdMovie)
+        {
+            return Ok(_artRepo.GetAllProducersOfOneMovie(IdMovie).Select(x => x.toWeb()));
+        }
+        /// <summary>
+        /// Adds a producer to a movie
+        /// </summary>
+        /// <param name="idProducer">the unique id of the producer to add</param>
+        /// <param name="idMovie">the unique id of the movie wherein add the producer</param>
+        /// <returns>Ok if succeeded, bad request if not</returns>        
+        [HttpPost("/producer/{idProducer}")]
+        public IActionResult AddProducerToMovie([FromRoute]int idProducer,[FromBody]int idMovie)
+        {
+            if (!_artRepo.AddProducerToMovie(idProducer, idMovie)) return BadRequest("Erreur d'insertion");
 
+            return Ok("Producteur ajouté");
+        }
+        /// <summary>
+        /// Deletes a producer from one movie
+        /// </summary>
+        /// <param name="idProducer">the unique id of the producer to remove</param>
+        /// <param name="idMovie">the unique id of the movie from which delete the producer</param>
+        /// <returns>Ok if succeeded</returns>
+        [HttpDelete("/producer/deleteOne/{idProducer}")]
+        public IActionResult DeleteProducerFromOneMovie([FromRoute] int idProducer, [FromBody] int idMovie)
+        {
+            if(!_artRepo.DeleteProducerOfOneMovie(idProducer, idMovie))
+                return BadRequest("Suppression impossible");
+            return Ok("Producteur supprimé");
+        }
+        /// <summary>
+        /// Deletes a producer from all movies
+        /// </summary>
+        /// <param name="idProducer">the unique id of the producer to remove</param>
+        /// <returns>Ok if succeeded, bad request if not</returns>
+        [HttpDelete("/producer/deleteAll/{idProducer}")]
+        public IActionResult DeleteProducerAllMovies(int idProducer)
+        {
+            if(!_artRepo.DeleteProducer_AllHisMovies(idProducer))
+                return BadRequest("Suppression impossible");
+            return Ok("Producteur supprimé");
+        }
+
+        #endregion
+        #region Director
+        /// <summary>
+        /// Get all directors registered in db
+        /// </summary>
+        /// <returns>a IEnumerable containing artist objects with name, firstname and birthdate</returns>
+        [HttpGet("/directors")]
+        public IActionResult GetAllDirectors()
+        {
+            return Ok(_artRepo.GetAllDirectors().Select(x => x.toWeb()));
+        }
+        /// <summary>
+        /// Gets all directors of a movie
+        /// </summary>
+        /// <param name="IdMovie">the unique movie id</param>
+        /// <returns>a IEnumerable containing artist objects with name, firstname and birthdate</returns>
+        [HttpGet("/director/{IdMovie}")]
+        public IActionResult GetDirectorsByMovie(int IdMovie)
+        {
+            return Ok(_artRepo.GetAllDirectorsOfOneMovie(IdMovie).Select(x => x.toWeb()));
+        }
+        /// <summary>
+        /// Adds a director to a movie
+        /// </summary>
+        /// <param name="idDirector">the unique id of the director to add</param>
+        /// <param name="idMovie">the unique id of the movie wherein add the director</param>
+        /// <returns>Ok if succeeded, bad request if not</returns>        
+        [HttpPost("/director/{idDirector}")]
+        public IActionResult AddDirectorToMovie([FromRoute] int idDirector, [FromBody] int idMovie)
+        {
+            if (!_artRepo.AddDirectorToMovie(idDirector, idMovie)) return BadRequest("Erreur d'insertion");
+
+            return Ok("Réalisateur ajouté");
+        }
+        /// <summary>
+        /// Deletes a director from one movie
+        /// </summary>
+        /// <param name="idDirector">the unique id of the director to remove</param>
+        /// <param name="idMovie">the unique id of the movie from which delete the director</param>
+        /// <returns>Ok if succeeded</returns>
+        [HttpDelete("/director/deleteOne/{idDirector}")]
+        public IActionResult DeleteDirectorFromOneMovie([FromRoute] int idDirector, [FromBody] int idMovie)
+        {
+            if (!_artRepo.DeleteDirectorOfOneMovie(idDirector, idMovie))
+                return BadRequest("Suppression impossible");
+            return Ok("Réalisateur supprimé");
+        }
+        /// <summary>
+        /// Deletes a director from all his movies
+        /// </summary>
+        /// <param name="idDirector">the unique id of the director to remove</param>
+        /// <returns>Ok if succeeded, bad request if not</returns>
+        [HttpDelete("/director/deleteAll/{idDirector}")]
+        public IActionResult DeleteDirectorAllMovies(int idDirector)
+        {
+            if (!_artRepo.DeleteDirector_AllHisMovies(idDirector))
+                return BadRequest("Suppression impossible");
+            return Ok("Réalisateur supprimé");
+        }
+        #endregion
+        #region Actor
+        /// <summary>
+        /// Get all actors registered in db
+        /// </summary>
+        /// <returns>a IEnumerable containing artist objects with name, firstname and birthdate</returns>
+        [HttpGet("/actors")]
+        public IActionResult GetAllActors()
+        {
+            return Ok(_artRepo.GetAllActors().Select(x => x.toWeb()));
+        }
+
+        #endregion
     }
 }
