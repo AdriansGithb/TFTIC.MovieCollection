@@ -29,7 +29,7 @@ namespace MovieCollectionDAL.Services
             };
         }
 
-
+        #region Artist
         public bool Create(Artist a)
         {
             Connection connection = new Connection(_connectionString);
@@ -55,6 +55,148 @@ namespace MovieCollectionDAL.Services
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }
+        #endregion
+        #region Producer
+        //public bool AddToFilm(int idArtist, int idFilm, Enum role)
+        //{
+
+        //}
+        public bool AddProducerToMovie(int idArtist, int idMovie)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "INSERT INTO Production VALUES (@idArtist, @idMovie)";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idArtist", idArtist);
+            cmd.AddParameter("idMovie", idMovie);
+
+            return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public bool DeleteProducerOfOneMovie(int idArtist, int idMovie)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "DELETE FROM Production WHERE P_IdArtist = @idArtist AND P_IdMovie = @idMovie";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idArtist", idArtist);
+            cmd.AddParameter("idMovie", idMovie);
+
+            return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public bool DeleteProducerOfAllMovies(int idArtist)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "DELETE FROM Production WHERE P_IdArtist = @idArtist";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idArtist", idArtist);
+
+            return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public IEnumerable<Artist> GetAllProducers()
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "SELECT * FROM Artist " +
+                "WHERE IdArtist IN " +
+                "(SELECT DISTINCT P_IdArtist " +
+                "FROM Production P JOIN Movie M ON P.P_IdMovie = M.IdMovie " +
+                "WHERE M.M_IsDeleted = 0)";
+            Command cmd = new Command(sql, false);
+
+            return connection.ExecuteReader(cmd, Converter);
+        }
+        public IEnumerable<Artist> GetAllProducersOfOneMovie(int idMovie)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "SELECT * FROM Artist " +
+                "WHERE IdArtist IN " +
+                "(SELECT P_IdArtist " +
+                "FROM Production P JOIN Movie M ON P.P_IdMovie = M.IdMovie " +
+                "WHERE M.M_IsDeleted = 0 AND P.P_IdMovie = @idMovie )";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idMovie", idMovie);
+
+            return connection.ExecuteReader(cmd, Converter);
+        }
+
+        #endregion
+        #region Director
+        public bool AddDirectorToMovie(int idArtist, int idMovie)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "INSERT INTO Direction VALUES (@idArtist, @idMovie)";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idArtist", idArtist);
+            cmd.AddParameter("idMovie", idMovie);
+
+            return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public bool DeleteDirectorOfOneMovie(int idArtist, int idMovie)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "DELETE FROM Direction WHERE D_IdArtist = @idArtist AND D_IdMovie = @idMovie";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idArtist", idArtist);
+            cmd.AddParameter("idMovie", idMovie);
+
+            return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public bool DeleteDirectorOfAllMovies(int idArtist)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "DELETE FROM Direction WHERE P_IdArtist = @idArtist";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idArtist", idArtist);
+
+            return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public IEnumerable<Artist> GetAllDirectors()
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "SELECT * FROM Artist " +
+                "WHERE IdArtist IN " +
+                "(SELECT DISTINCT D_IdArtist " +
+                "FROM Direction D JOIN Movie M ON D.D_IdMovie = M.IdMovie " +
+                "WHERE M.M_IsDeleted = 0)";
+            Command cmd = new Command(sql, false);
+
+            return connection.ExecuteReader(cmd, Converter);
+        }
+        public IEnumerable<Artist> GetAllDirectorsOfOneMovie(int idMovie)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "SELECT * FROM Artist " +
+                "WHERE IdArtist IN " +
+                "(SELECT D_IdArtist " +
+                "FROM Direction D JOIN Movie M ON D.D_IdMovie = M.IdMovie " +
+                "WHERE M.M_IsDeleted = 0 AND D.D_IdMovie = @idMovie )";
+            Command cmd = new Command(sql, false);
+
+            cmd.AddParameter("idMovie", idMovie);
+
+            return connection.ExecuteReader(cmd, Converter);
+        }
+
+        #endregion
+        #region Actor
+        public IEnumerable<Artist> GetAllActors()
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "SELECT * FROM Artist " +
+                "WHERE IdArtist IN " +
+                "(SELECT DISTINCT Act_IdArtist " +
+                "FROM Acting A JOIN Movie M ON A.Act_IdMovie = M.IdMovie " +
+                "WHERE M.M_IsDeleted = 0)";
+            Command cmd = new Command(sql, false);
+
+            return connection.ExecuteReader(cmd, Converter);
+        }
+
+        #endregion
 
     }
 }
