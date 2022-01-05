@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieCollectionAPI.Models;
 using MovieCollectionAPI.Tools;
 using MovieCollectionDAL.Repositories;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionAPI.Controllers
 {
+    [Authorize("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class ArtistController : ControllerBase
@@ -112,6 +114,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="idProducer">the unique id of the producer to add</param>
         /// <param name="idMovie">the unique id of the movie wherein add the producer</param>
         /// <returns>Ok if succeeded, bad request if not</returns>        
+        [Authorize("admin")]
         [HttpPost("/producer/{idProducer}")]
         public IActionResult AddProducerToMovie([FromRoute]int idProducer,[FromBody]int idMovie)
         {
@@ -125,6 +128,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="idProducer">the unique id of the producer to remove</param>
         /// <param name="idMovie">the unique id of the movie from which delete the producer</param>
         /// <returns>Ok if succeeded</returns>
+        [Authorize("admin")]
         [HttpDelete("/producer/deleteOne/{idProducer}")]
         public IActionResult DeleteProducerFromOneMovie([FromRoute] int idProducer, [FromBody] int idMovie)
         {
@@ -137,6 +141,7 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="idProducer">the unique id of the producer to remove</param>
         /// <returns>Ok if succeeded, bad request if not</returns>
+        [Authorize("admin")]
         [HttpDelete("/producer/deleteAll/{idProducer}")]
         public IActionResult DeleteProducerAllMovies(int idProducer)
         {
@@ -172,6 +177,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="idDirector">the unique id of the director to add</param>
         /// <param name="idMovie">the unique id of the movie wherein add the director</param>
         /// <returns>Ok if succeeded, bad request if not</returns>        
+        [Authorize("admin")]
         [HttpPost("/director/{idDirector}")]
         public IActionResult AddDirectorToMovie([FromRoute] int idDirector, [FromBody] int idMovie)
         {
@@ -185,6 +191,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="idDirector">the unique id of the director to remove</param>
         /// <param name="idMovie">the unique id of the movie from which delete the director</param>
         /// <returns>Ok if succeeded</returns>
+        [Authorize("admin")]
         [HttpDelete("/director/deleteOne/{idDirector}")]
         public IActionResult DeleteDirectorFromOneMovie([FromRoute] int idDirector, [FromBody] int idMovie)
         {
@@ -197,6 +204,7 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="idDirector">the unique id of the director to remove</param>
         /// <returns>Ok if succeeded, bad request if not</returns>
+        [Authorize("admin")]
         [HttpDelete("/director/deleteAll/{idDirector}")]
         public IActionResult DeleteDirectorAllMovies(int idDirector)
         {
@@ -210,6 +218,7 @@ namespace MovieCollectionAPI.Controllers
         /// Get all actors registered in db
         /// </summary>
         /// <returns>a IEnumerable containing artist objects with name, firstname and birthdate</returns>
+        [Authorize("user")]
         [HttpGet("/actors")]
         public IActionResult GetAllActors()
         {

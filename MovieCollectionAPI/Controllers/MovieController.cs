@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieCollectionAPI.Models;
 using MovieCollectionAPI.Tools;
 using MovieCollectionDAL.Repositories;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionAPI.Controllers
 {
+    [Authorize("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class MovieController : ControllerBase
@@ -52,6 +54,7 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="form">a movie form object of the new movie</param>
         /// <returns>Ok if succeeded, badrequest if not</returns>
+        [Authorize("admin")]
         [HttpPost]
         public IActionResult Create(MovieForm form)
         {
@@ -66,6 +69,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="Id">The id of the movie to update</param>
         /// <param name="form">the form object of the movie</param>
         /// <returns>Ok if update succeeded or new movie created; BadRequest if error;</returns>
+        [Authorize("admin")]
         [HttpPut("{Id}")]
         public IActionResult Update([FromRoute] int Id, [FromBody] MovieForm form)
         {
@@ -87,6 +91,7 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="Id">The id of the movie to delete</param>
         /// <returns>OK if succeed</returns>
+        [Authorize("admin")]
         [HttpDelete("{Id}")]
         public IActionResult Delete(int Id)
         {

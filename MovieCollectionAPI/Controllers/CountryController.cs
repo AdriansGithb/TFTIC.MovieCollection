@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieCollectionAPI.Models;
 using MovieCollectionAPI.Tools;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionAPI.Controllers
 {
+    [Authorize("admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CountryController : ControllerBase

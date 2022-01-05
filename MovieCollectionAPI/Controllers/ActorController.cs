@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieCollectionAPI.Models;
 using MovieCollectionAPI.Tools;
 using MovieCollectionDAL.Repositories;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionAPI.Controllers
 {
+    [Authorize("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class ActorController : ControllerBase
@@ -49,6 +51,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="idMovie">the unique id of the movie wherein add the actor</param>
         /// <param name="character">the name of his character in the movie</param>
         /// <returns>Ok if succeeded, bad request if not</returns>        
+        [Authorize("admin")]
         [HttpPost("/AddToMovie")]
         public IActionResult AddActorToMovie(ActorForm a)
         {
@@ -66,6 +69,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="oldCharacter">the old name of his character in the movie</param>
         /// <param name="newCharacter">the new name of his character in the movie</param>
         /// <returns>Ok if succeeded, bad request if not</returns>        
+        [Authorize("admin")]
         [HttpPut]
         public IActionResult UpdateActorCharacter(ActorForm newCharacter, string oldCharacter)
         {
@@ -80,6 +84,7 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="Id">the unique id of the actor to unlink</param>
         /// <returns>Ok if succeeded, bad request if not</returns>
+        [Authorize("admin")]
         [HttpDelete("Id")]
         public IActionResult DeleteAllMoviesOfAnActor(int Id)
         {
@@ -92,6 +97,7 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="a">the actor object containing the character and the movie</param>
         /// <returns>Ok if succeeded, bad request if not</returns>
+        [Authorize("admin")]
         [HttpDelete("/movie/deleteCharacter")]
         public IActionResult DeleteCharacterFromOneMovie(ActorForm a)
         {
@@ -105,6 +111,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="idActor">the unique id of the actor</param>
         /// <param name="idMovie">the unique id of the movie</param>
         /// <returns>Ok if succeeded, bad request if not</returns>
+        [Authorize("admin")]
         [HttpDelete("/movie{idMovie}/deleteAllCharacters{idActor}")]
         public IActionResult DeleteAllCharactersOfOneActorFromOneMovie([FromRoute]int idActor, [FromRoute]int idMovie)
         {
