@@ -12,8 +12,10 @@ namespace MovieCollectionDAL.Repositories
         bool Register(AppUser u);
         bool Delete(Guid id);
         IEnumerable<AppUser> GetAll();
-        AppUser GetById(int Id);
+        AppUser GetById(Guid Id);
         bool Update(AppUser u);
         AppUser Login(string email, string pass);
+        bool Undelete(Guid Id);
+        bool UpdatePassword(Guid userId, string actualPass, string newPass);
     }
 }

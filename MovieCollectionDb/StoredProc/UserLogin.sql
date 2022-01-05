@@ -20,6 +20,12 @@ BEGIN
 		WHERE U_Email = @email 
 			AND U_Password = @pass_hash
 
+	IF ((SELECT U_IsDeleted FROM AppUser WHERE @id = IdUser) = 1)
+	BEGIN
+		RAISERROR('L''utilisateur est supprimé dans la db',16,1)
+		ROLLBACK
+	END
+
 	SELECT * FROM V_User WHERE IdUser = @id
 
 END

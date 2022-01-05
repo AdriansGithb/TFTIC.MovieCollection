@@ -171,6 +171,16 @@ namespace MovieCollectionAPI.Tools
                 Name = form.Name
             };
         }
+        public static DAL.AppUser toDal(this WEB.UpdateUserForm form, Guid id)
+        {
+            return new DAL.AppUser
+            {
+                IdUser = id,
+                Email = form.Email,
+                Password = form.Password,
+                Name = form.Name
+            };
+        }
         public static WEB.User toWeb(this DAL.AppUser u)
         {
             return new WEB.User
@@ -179,7 +189,8 @@ namespace MovieCollectionAPI.Tools
                 Email = u.Email,
                 Name = u.Name,
                 IsAdmin = u.IsAdmin,
-                Token =""
+                Token ="",
+                IsDeleted = u.IsDeleted
             };
         }
 

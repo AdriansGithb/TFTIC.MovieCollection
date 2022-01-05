@@ -35,3 +35,11 @@ INSERT INTO Acting VALUES (3,1,'Obi-Wan Kenobi'),(3,2,'Obi-Wan Kenobi'), (4,3,'J
 INSERT INTO Production VALUES (5,1), (5,2), (1,3)
 
 INSERT INTO Direction VALUES (5,1),(5,2)
+
+EXEC UserRegister 'admin@test.com', 'admin', 'myadmin'
+UPDATE AppUser SET U_IsAdmin = 1 WHERE U_Email like 'admin@test.com'
+
+EXEC UserRegister 'user@test.com', 'user', 'myuser'
+
+EXEC UserRegister 'deleteduser@test.com', 'user', 'mydeleteduser'
+UPDATE AppUser SET U_IsDeleted = 1 WHERE U_Email like 'deleteduser@test.com'

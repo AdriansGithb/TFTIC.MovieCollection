@@ -79,6 +79,8 @@
     <Build Include="StoredProc\UserRegister.sql" />
     <Build Include="StoredProc\UserLogin.sql" />
     <Build Include="Views\V_User.sql" />
+    <Build Include="StoredProc\UserUpdate.sql" />
+    <Build Include="StoredProc\UserPasswordUpdate.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MovieCollectionDb.refactorlog" />

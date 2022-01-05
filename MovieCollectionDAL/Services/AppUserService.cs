@@ -68,27 +68,64 @@ namespace MovieCollectionDAL.Services
                 throw new Exception(e.Message);
             }
         }
+        
+        public override IEnumerable<AppUser> GetAll()
+        {
+            Connection connection = new Connection(_connectionString);
+            string query = "SELECT * FROM V_User";
+            Command cmd = new Command(query, false);
 
+            return connection.ExecuteReader(cmd, Converter);
+        }
+        public AppUser GetById(Guid Id)
+        {
+            Connection connection = new Connection(_connectionString);
+            string Query = "SELECT * FROM V_User WHERE IdUser = @id";
+            Command cmd = new Command(Query, false);
+            cmd.AddParameter("Id", Id);
+
+            return connection.ExecuteReader(cmd, Converter).FirstOrDefault();
+        }
 
         public bool Update(AppUser u)
         {
             Connection connection = new Connection(_connectionString);
-            string sql = "UPDATE AppUser SET U_Email = @mail, U_Password = @pass, U_Name = @name, U_IsAdmin = @isadmin WHERE IdUser = @id";
-            Command cmd = new Command(sql, false);
+            string sql = "UserUpdate";
+            Command cmd = new Command(sql, true);
 
-            cmd.AddParameter("mail", u.Email);
-            cmd.AddParameter("pass", u.Password);
+            cmd.AddParameter("email", u.Email);
             cmd.AddParameter("name", u.Name);
-            cmd.AddParameter("isadmin", u.IsAdmin);
-            cmd.AddParameter("id", u.IdUser);
+            cmd.AddParameter("password", u.Password);
+            cmd.AddParameter("userid", u.IdUser);
 
             return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public bool UpdatePassword(Guid userId, string actualPass, string newPass)
+        {
+            Connection connection = new Connection(_connectionString);
+            string sql = "UserPasswordUpdate";
+            Command cmd = new Command(sql, true);
+
+            cmd.AddParameter("actualPassword", actualPass);
+            cmd.AddParameter("newPassword", newPass);
+            cmd.AddParameter("userid", userId);
+
+            return connection.ExecuteNonQuery(cmd) == 1;
+        }
+        public bool Undelete(Guid Id)
+        {
+            Connection connection = new Connection(_connectionString);
+            string Query = "UPDATE AppUser SET U_IsDeleted = 0 WHERE IdUser = @id";
+            Command cmd = new Command(Query, false);
+            cmd.AddParameter("id", Id);
+
+            return connection.ExecuteNonQuery(cmd) >= 0 ;
         }
 
         public bool Delete(Guid Id)
         {
             Connection connection = new Connection(_connectionString);
-            string Query = "UPDATE AppUSer SET U_IsDeleted = 1 WHERE IdUser = @id";
+            string Query = "UPDATE AppUser SET U_IsDeleted = 1 WHERE IdUser = @id";
             Command cmd = new Command(Query, false);
             cmd.AddParameter("id", Id);
 
