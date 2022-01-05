@@ -157,7 +157,29 @@ namespace MovieCollectionAPI.Tools
         //    };
         //}
         #endregion
+        #region AppUser
+        public static DAL.AppUser toDal(this WEB.RegisterForm form)
+        {
+            return new DAL.AppUser
+            {
+                Email = form.Email,
+                Password = form.Password,
+                Name = form.Name
+            };
+        }
+        public static WEB.User toWeb(this DAL.AppUser u)
+        {
+            return new WEB.User
+            {
+                IdUser = u.IdUser,
+                Email = u.Email,
+                Name = u.Name,
+                IsAdmin = u.IsAdmin,
+                Token =""
+            };
+        }
 
+        #endregion
 
 
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,12 +7,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MovieCollectionAPI.Tools;
 using MovieCollectionDAL.Repositories;
 using MovieCollectionDAL.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MovieCollectionAPI
@@ -31,6 +35,7 @@ namespace MovieCollectionAPI
 
             services.AddControllers();
 
+            services.AddScoped<TokenManager>();
             services.AddScoped<IAppUserRepository, AppUserService>();
             services.AddScoped<IArtistRepository, ArtistService>();
             services.AddScoped<IAudienceRepository, AudienceService>();
@@ -39,6 +44,27 @@ namespace MovieCollectionAPI
             services.AddScoped<IGenreRepository, GenreService>();
             services.AddScoped<IMovieRepository, MovieService>();
             services.AddScoped<IActorRepository, ActorService>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("admin", policy => policy.RequireRole("admin"));
+                options.AddPolicy("user", policy => policy.RequireRole("user", "admin"));
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+                AddJwtBearer(option =>
+            {
+                option.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenManager.secretKey)),
+                    ValidateLifetime = true,
+                    ValidateIssuer = true,
+                    ValidIssuer = TokenManager.issuer,
+                    ValidateAudience = true,
+                    ValidAudience = TokenManager.audience
+                };
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -60,6 +86,7 @@ namespace MovieCollectionAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

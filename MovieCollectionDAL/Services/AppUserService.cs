@@ -4,6 +4,7 @@ using MovieCollectionDAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,9 @@ namespace MovieCollectionDAL.Services
         {
             return new AppUser
             {
-                IdUser = (string)reader["IdUser"],
+                IdUser = (Guid)reader["IdUser"],
                 Email = (string)reader["U_Email"],
-                Password = (string)reader["U_Password"],
+                //Password = (string)reader["U_Password"],
                 Name = (string)reader["U_Name"],
                 IsAdmin = (bool)reader["U_IsAdmin"],
                 CreationDate = (DateTime)reader["U_CreationDate"],
@@ -31,20 +32,44 @@ namespace MovieCollectionDAL.Services
             };
         }
 
-
-        public bool Create(AppUser u)
+        public bool Register(AppUser u)
         {
             Connection connection = new Connection(_connectionString);
-            string sql = "INSERT INTO AppUser (U_Email, U_Password, U_Name, U_IsAdmin) VALUES (@mail, @pass, @name, @isadmin)";
-            Command cmd = new Command(sql, false);
+            string query = "UserRegister";
+            Command cmd = new Command(query, true);
 
-            cmd.AddParameter("mail", u.Email);
-            cmd.AddParameter("pass", u.Password);
+            cmd.AddParameter("email", u.Email);
+            cmd.AddParameter("password", u.Password);
             cmd.AddParameter("name", u.Name);
-            cmd.AddParameter("isadmin", u.IsAdmin);
-
-            return connection.ExecuteNonQuery(cmd) == 1;
+            //cmd.AddParameter("isadmin", u.IsAdmin);
+            try
+            {
+                return (connection.ExecuteNonQuery(cmd) > 0) ;
+            }
+            catch(SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
         }
+        public AppUser Login(string email, string pass)
+        {
+            Connection connection = new Connection(_connectionString);
+            string query = "UserLogin";
+            Command cmd = new Command(query, true);
+
+            cmd.AddParameter("email", email);
+            cmd.AddParameter("password", pass);
+            try
+            {
+                return connection.ExecuteReader(cmd, Converter).First();
+            }
+            catch(SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+
         public bool Update(AppUser u)
         {
             Connection connection = new Connection(_connectionString);
@@ -60,7 +85,7 @@ namespace MovieCollectionDAL.Services
             return connection.ExecuteNonQuery(cmd) == 1;
         }
 
-        public override bool Delete(int Id)
+        public bool Delete(Guid Id)
         {
             Connection connection = new Connection(_connectionString);
             string Query = "UPDATE AppUSer SET U_IsDeleted = 1 WHERE IdUser = @id";
