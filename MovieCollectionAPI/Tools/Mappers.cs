@@ -132,7 +132,7 @@ namespace MovieCollectionAPI.Tools
         #region Actor
         public static WEB.Actor toWeb(this DAL.Actor a, IArtistRepository _artRepo = null)
         {
-            DAL.Artist artist = _artRepo.GetById(a.IdArtist);
+            DAL.Artist artist = _artRepo.GetById(a.IdArtist) ?? new DAL.Artist();
             return new WEB.Actor
             {
                 IdArtist = a.IdArtist,
