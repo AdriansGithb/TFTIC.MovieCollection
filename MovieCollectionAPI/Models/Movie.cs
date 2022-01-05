@@ -16,7 +16,7 @@ namespace MovieCollectionAPI.Models
         public string OriginCountry { get; set; }
         public string Audience { get; set; }
         public IEnumerable<string> Genres { get; set; }
-        public IEnumerable<Artist> Actors { get; set; }
+        public IEnumerable<Actor> Actors { get; set; }
         public IEnumerable<Artist> Producers { get; set; }
         public IEnumerable<Artist> Directors { get; set; }
 

@@ -18,16 +18,18 @@ namespace MovieCollectionAPI.Controllers
         private readonly IMovieRepository _movieRepo;
         private readonly IAudienceRepository _audienceRepo;
         private readonly IArtistRepository _artistRepo;
+        private readonly IActorRepository _actorRepo;
         private readonly IGenreRepository _genreRepo;
         private readonly ICountryRepository _countryRepo;
 
-        public MovieController(IMovieRepository movieRepo, IAudienceRepository audienceRepo, IArtistRepository artistRepo, IGenreRepository genreRepo, ICountryRepository countryRepo)
+        public MovieController(IMovieRepository movieRepo, IAudienceRepository audienceRepo, IArtistRepository artistRepo, IGenreRepository genreRepo, ICountryRepository countryRepo, IActorRepository actorRepo)
         {
             _movieRepo = movieRepo;
             _audienceRepo = audienceRepo;
             _artistRepo = artistRepo;
             _genreRepo = genreRepo;
             _countryRepo = countryRepo;
+            _actorRepo = actorRepo;
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace MovieCollectionAPI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_movieRepo.GetAllNotDeleted().Select(x => x.toWeb(_countryRepo, _audienceRepo, _genreRepo)));
+            return Ok(_movieRepo.GetAllNotDeleted().Select(x => x.toWeb(_countryRepo, _audienceRepo, _genreRepo, _artistRepo, _actorRepo)));
         }
         /// <summary>
         /// Gets one movie by id

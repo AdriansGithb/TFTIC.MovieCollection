@@ -68,7 +68,7 @@ namespace MovieCollectionAPI.Tools
 
         #endregion
         #region Movie
-        public static WEB.Movie toWeb(this DAL.Movie m, ICountryRepository _cntryRepo = null, IAudienceRepository _audRepo = null, IGenreRepository _gnrRepo = null)
+        public static WEB.Movie toWeb(this DAL.Movie m, ICountryRepository _cntryRepo = null, IAudienceRepository _audRepo = null, IGenreRepository _gnrRepo = null, IArtistRepository _artRepo = null, IActorRepository _actRepo = null)
         {
             return new WEB.Movie
             {
@@ -80,7 +80,11 @@ namespace MovieCollectionAPI.Tools
                 IsDeleted = m.IsDeleted,
                 OriginCountry = (_cntryRepo != null && m.IdCountry != null) ? _cntryRepo.GetById((int)m.IdCountry).Name : "",
                 Audience = (_audRepo != null && m.IdAudience != null) ? _audRepo.GetById((int)m.IdAudience).Label : "",
-                Genres = (_gnrRepo != null) ? _gnrRepo.GetByFilmId(m.IdMovie).Select(x=>x.Label) : new List<string>()
+                Genres = (_gnrRepo != null) ? _gnrRepo.GetByFilmId(m.IdMovie).Select(x=>x.Label) : new List<string>(),
+                 Actors = (_actRepo != null) ? _actRepo.GetAllActorsOfOneMovie(m.IdMovie).Select(a=>a.toWeb(_artRepo)) : new List<WEB.Actor>(),
+                  Producers = (_artRepo != null) ? _artRepo.GetAllProducersOfOneMovie(m.IdMovie).Select(a=>a.toWeb()) : new List<WEB.Artist>(),
+              Directors = (_artRepo != null) ? _artRepo.GetAllDirectorsOfOneMovie(m.IdMovie).Select(a=>a.toWeb()) : new List<WEB.Artist>()
+                
             };
         }
         //public static DAL.Movie toDal(this WEB.Movie m)
