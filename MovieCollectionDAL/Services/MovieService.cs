@@ -33,11 +33,26 @@ namespace MovieCollectionDAL.Services
             };
         }
 
-        public IEnumerable<Movie> GetAllNotDeleted()
+        //public IEnumerable<Movie> GetAllNotDeleted()
+        //{
+
+        //    Connection connection = new Connection(_connectionString);
+        //    string Query = "SELECT * FROM [Movie] WHERE M_IsDeleted = 0";
+        //    Command cmd = new Command(Query, false);
+
+        //    return connection.ExecuteReader(cmd, Converter);
+        //}
+        public IEnumerable<Movie> GetAllNotDeleted(int? idGenre = null, int? idArtist = null, int? idCountry = null, int? idAudience = null)
         {
+
             Connection connection = new Connection(_connectionString);
-            string Query = "SELECT * FROM [Movie] WHERE M_IsDeleted = 0";
-            Command cmd = new Command(Query, false);
+            string Query = "GetAllUndeletedMoviesFiltered";
+            Command cmd = new Command(Query, true);
+
+            cmd.AddParameter("idGenre", idGenre);
+            cmd.AddParameter("idArtist", idArtist);
+            cmd.AddParameter("idCountry", idCountry);
+            cmd.AddParameter("idAudience", idAudience);
 
             return connection.ExecuteReader(cmd, Converter);
         }

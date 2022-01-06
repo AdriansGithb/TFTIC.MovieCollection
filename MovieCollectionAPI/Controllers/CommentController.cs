@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionAPI.Controllers
 {
-    //[Authorize("user")]
+    [Authorize("user")]
     [Route("api/[controller]")]
     [ApiController]
     public class CommentController : ControllerBase
@@ -53,6 +53,7 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="Id">the unique comment id</param>
         /// <returns>an object containing the comment</returns>
+        [Authorize("Admin")]
         [HttpGet("{Id}")]
         public IActionResult GetById(int Id)
         {
@@ -63,7 +64,6 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <param name="form">a comment form object of the new comment</param>
         /// <returns>Ok if succeeded, badrequest if not</returns>
-        //[Authorize("user")]
         [HttpPost]
         public IActionResult Create(CommentForm form)
         {
@@ -102,7 +102,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="Id">the unique comment id</param>
         /// <param name="idAdmin">the admin's id</param>
         /// <returns>Ok if succeeded, bad request if not</returns>
-        //[Authorize("admin")]
+        [Authorize("admin")]
         [HttpDelete("{Id}/{idAdmin}")]
         public IActionResult Delete(int Id, Guid idAdmin)
         {

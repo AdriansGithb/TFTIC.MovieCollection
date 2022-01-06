@@ -13,7 +13,7 @@ namespace MovieCollectionDAL.Repositories
         bool Update(int idMovie, Movie m);
         bool Delete(int Id);
         IEnumerable<Movie> GetAll();
-        IEnumerable<Movie> GetAllNotDeleted();
+        IEnumerable<Movie> GetAllNotDeleted(int? idGenre = null, int? idArtist = null, int? idCountry = null, int? idAudience = null);
         Movie GetById(int Id);
 
     }

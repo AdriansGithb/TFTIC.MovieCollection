@@ -81,6 +81,8 @@
     <Build Include="Views\V_User.sql" />
     <Build Include="StoredProc\UserUpdate.sql" />
     <Build Include="StoredProc\UserPasswordUpdate.sql" />
+    <Build Include="StoredProc\GetAllUndeletedMoviesFiltered.sql" />
+    <Build Include="Views\V_MoviesFiltering.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MovieCollectionDb.refactorlog" />

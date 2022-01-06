@@ -37,9 +37,9 @@ namespace MovieCollectionAPI.Controllers
         /// </summary>
         /// <returns>a IEnumerable containing movies objects with details, origin country, audience, producers, realisators, actors</returns>
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int? idGenre = null, int? idArtist = null, int? idCountry = null, int? idAudience = null)
         {
-            return Ok(_movieRepo.GetAllNotDeleted().Select(x => x.toWeb(_countryRepo, _audienceRepo, _genreRepo, _artistRepo, _actorRepo)));
+            return Ok(_movieRepo.GetAllNotDeleted(idGenre, idArtist , idCountry , idAudience).Select(x => x.toWeb(_countryRepo, _audienceRepo, _genreRepo, _artistRepo, _actorRepo)));
         }
         /// <summary>
         /// Gets one movie by id
