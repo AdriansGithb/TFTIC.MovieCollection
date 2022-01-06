@@ -10,8 +10,9 @@ namespace MovieCollectionDAL.Repositories
     public interface ICommentRepository
     {
         bool Create(Comment c);
-        bool Delete(string idUser, int idCom);
+        bool Delete(Guid idUser, int idCom);
         IEnumerable<Comment> GetAll();
+        IEnumerable<Comment> GetAllUndeletedByMovie(int idMovie);
         Comment GetById(int Id);
         bool Update(Comment c);
 

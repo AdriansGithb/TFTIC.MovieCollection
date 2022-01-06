@@ -195,6 +195,44 @@ namespace MovieCollectionAPI.Tools
         }
 
         #endregion
+        #region Comment
+        public static WEB.Comment toWeb(this DAL.Comment c, IMovieRepository _movieRepo = null, IAppUserRepository _userRepo = null)
+        {
+            return new WEB.Comment
+            {
+                IdComment = c.IdComment,
+                Text = c.Text,
+                Movie = (_movieRepo != null) ? _movieRepo.GetById(c.IdMovie).toWeb() : new WEB.Movie(),
+                CreatedBy = (_userRepo != null) ? _userRepo.GetById(c.CreatedBy).toWeb() : new WEB.User(),
+                CreationDate = c.CreationDate,
+                LastModifBy = (_userRepo != null && c.LastModifBy != null) ? _userRepo.GetById((Guid)c.LastModifBy).toWeb() : new WEB.User(),
+                LastModifDate = c.LastModifDate,
+                DeletedBy = (_userRepo != null && c.DeletedBy != null) ? _userRepo.GetById((Guid)c.DeletedBy).toWeb() : new WEB.User(),
+                DeletionDate = c.DeletionDate
+
+            };
+        }
+        public static DAL.Comment toDal(this WEB.CommentForm form)
+        {
+            return new DAL.Comment
+            {
+                Text = form.Text,
+                IdMovie = form.IdMovie,
+                CreatedBy = form.CreatedBy
+            };
+        }
+        public static DAL.Comment toDal(this WEB.UpdateCommentForm form)
+        {
+            return new DAL.Comment
+            {
+                IdComment = form.IdComment,
+                Text = form.Text,
+                IdMovie = form.IdMovie,
+                LastModifBy = form.ModifiedBy,
+                LastModifDate = DateTime.Now
+            };
+        }
+        #endregion
 
 
 

@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MovieCollectionDAL.Entities
+namespace MovieCollectionAPI.Models
 {
     public class Comment
     {
         public int IdComment { get; set; }
         public string Text { get; set; }
-        public int IdMovie { get; set; }
-        public Guid CreatedBy { get; set; }
+        public Movie Movie { get; set; }
+        public User CreatedBy { get; set; }
         public DateTime CreationDate { get; set; }
-        public Guid? LastModifBy { get; set; }
+        public User LastModifBy { get; set; }
         public DateTime? LastModifDate { get; set; }
-        public Guid? DeletedBy { get; set; }
+        public User DeletedBy { get; set; }
         public DateTime? DeletionDate { get; set; }
+
     }
 }

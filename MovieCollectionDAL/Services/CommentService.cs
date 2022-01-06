@@ -24,14 +24,26 @@ namespace MovieCollectionDAL.Services
                 IdComment = (int)reader["IdComment"],
                 Text = (string)reader["Com_Text"],
                 IdMovie = (int)reader["Com_IdMovie"],
-                CreatedBy = (string)reader["Com_CreatedBy"],
+                CreatedBy = (Guid)reader["Com_CreatedBy"],
                 CreationDate = (DateTime)reader["Com_CreationDate"],
-                LastModifBy = (reader["Com_LastModifBy"] != DBNull.Value) ? (string)reader["Com_LastModifBy"] : "",
+                LastModifBy = (reader["Com_LastModifBy"] != DBNull.Value) ? (Guid)reader["Com_LastModifBy"] : null,
                 LastModifDate = (reader["Com_LastModifDate"] != DBNull.Value) ? (DateTime)reader["Com_LastModifDate"] : null,
-                DeletedBy = (reader["Com_DeletedBy"] != DBNull.Value) ? (string)reader["Com_DeletedBy"] : "",
+                DeletedBy = (reader["Com_DeletedBy"] != DBNull.Value) ? (Guid)reader["Com_DeletedBy"] : null,
                 DeletionDate = (reader["Com_DeletionDate"] != DBNull.Value) ? (DateTime)reader["Com_DeletionDate"] : null
             };
         }
+
+        public IEnumerable<Comment> GetAllUndeletedByMovie(int idMovie)
+        {
+            Connection connection = new Connection(_connectionString);
+            string Query = "SELECT * FROM Comment WHERE Com_DeletedBy IS NULL AND Com_IdMovie = @idMovie";
+            Command cmd = new Command(Query, false);
+
+            cmd.AddParameter("idMovie", idMovie);
+
+            return connection.ExecuteReader(cmd, Converter);
+        }
+
 
 
         public bool Create(Comment c)
@@ -55,18 +67,19 @@ namespace MovieCollectionDAL.Services
             cmd.AddParameter("txt", c.Text);
             cmd.AddParameter("idMovie", c.IdMovie);
             cmd.AddParameter("idEditor", c.LastModifBy);
-            cmd.AddParameter("dateModif", DateTime.Now);
+            cmd.AddParameter("dateModif", c.LastModifDate);
             cmd.AddParameter("id", c.IdComment);
 
             return connection.ExecuteNonQuery(cmd) == 1;
         }
 
-        public bool Delete(string IdUser,int IdComment)
+        public bool Delete(Guid IdUser,int IdComment)
         {
             Connection connection = new Connection(_connectionString);
-            string Query = "UPDATE Comment SET Com_DeletedBy = @idEraser WHERE IdComment = @idCom";
+            string Query = "UPDATE Comment SET Com_DeletedBy = @idEraser, Com_DeletionDate = @delDate WHERE IdComment = @idCom";
             Command cmd = new Command(Query, false);
             cmd.AddParameter("idEraser", IdUser);
+            cmd.AddParameter("delDate", DateTime.Now);
             cmd.AddParameter("idCom", IdComment);
 
             return connection.ExecuteNonQuery(cmd) == 1;
@@ -77,7 +90,7 @@ namespace MovieCollectionDAL.Services
             Connection connection = new Connection(_connectionString);
             string Query = "UPDATE Comment SET Com_DeletedBy = @idEraser WHERE IdComment = @idCom";
             Command cmd = new Command(Query, false);
-            cmd.AddParameter("idEraser", "SYSTEM");
+            cmd.AddParameter("idEraser", Guid.Empty);
             cmd.AddParameter("idCom", IdComment);
 
             return connection.ExecuteNonQuery(cmd) == 1;

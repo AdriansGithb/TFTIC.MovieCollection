@@ -68,7 +68,48 @@ namespace MovieCollectionAPI
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieCollectionAPI", Version = "v1" });
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+                    AddJwtBearer(option =>
+                    {
+                        option.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenManager.secretKey)),
+                            ValidateLifetime = true,
+                            ValidateIssuer = true,
+                            ValidIssuer = TokenManager.issuer,
+                            ValidateAudience = true,
+                            ValidAudience = TokenManager.audience
+                        };
+                    });
+
+
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieCollection Api", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer", //!!!!!LOWERCASE!!!!!
+                    BearerFormat = "JWT", //!!!UPPERCASE!!!!
+                    In = ParameterLocation.Header, //Dans le Header Http
+
+
+
+                    Description = "JWT Bearer : \r\n Enter Token"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement(){
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = JwtBearerDefaults.AuthenticationScheme
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
             });
         }
 
