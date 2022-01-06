@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[AppUser]
+(
+	[IdUser] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(), 
+    [U_Email] VARCHAR(100) NOT NULL UNIQUE, 
+    [U_Password] VARBINARY(64) NOT NULL, 
+    [U_Name] VARCHAR(50) NOT NULL, 
+    [U_IsAdmin] BIT NOT NULL DEFAULT 0, 
+    [U_CreationDate] DATETIME2 NOT NULL DEFAULT GETDATE(), 
+    [U_IsDeleted] BIT NOT NULL DEFAULT 0, 
+    CONSTRAINT [CK_AppUser_Email] CHECK (U_Email like '%@%.%')
+)

@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Genre]
+(
+	[IdGenre] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [G_Label] NVARCHAR(50) NOT NULL,
+
+	CONSTRAINT UK_Genre_Label UNIQUE (G_Label)
+)
