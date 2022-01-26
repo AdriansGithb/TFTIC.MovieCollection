@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionAPI.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAppUserRepository _userRepo;
@@ -33,7 +35,7 @@ namespace MovieCollectionAPI.Controllers
             {
                 if (!_userRepo.Register(form.toDal()))
                     return BadRequest("Erreur lors de l'enregistrement");
-                return Ok("Utilisateur enregistré");
+                return Ok();
             }
             catch(Exception e)
             {

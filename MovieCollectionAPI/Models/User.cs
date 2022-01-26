@@ -14,7 +14,7 @@ namespace MovieCollectionAPI.Models
         public bool IsAdmin { get; set; }
         public string Token { get; set; }
         //public DateTime CreationDate { get; set; }
-        public bool IsDeleted { get; set; }
+        //public bool IsDeleted { get; set; }
 
     }
 }

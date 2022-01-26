@@ -66,6 +66,14 @@ namespace MovieCollectionAPI
                 };
             });
 
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod().
+                AllowAnyHeader();
+            }));
+
+
             services.AddSwaggerGen(c =>
             {
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
@@ -126,6 +134,8 @@ namespace MovieCollectionAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();

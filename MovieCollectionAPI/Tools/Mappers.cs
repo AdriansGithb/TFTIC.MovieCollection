@@ -189,8 +189,8 @@ namespace MovieCollectionAPI.Tools
                 Email = u.Email,
                 Name = u.Name,
                 IsAdmin = u.IsAdmin,
-                Token ="",
-                IsDeleted = u.IsDeleted
+                Token =""
+                //IsDeleted = u.IsDeleted
             };
         }
 
