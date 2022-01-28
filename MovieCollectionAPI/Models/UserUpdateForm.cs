@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieCollectionAPI.Models
 {
-    public class UpdateUserForm
+    public class UserUpdateForm
     {
         [Required]
         [EmailAddress]

@@ -84,7 +84,7 @@ namespace MovieCollectionAPI.Controllers
         /// <returns>Ok if update succeeded ; BadRequest if error</returns>
         [Authorize("admin")]
         [HttpPut("modify")]
-        public IActionResult Update([FromBody] UpdateCommentForm form)
+        public IActionResult Update([FromBody] CommentUpdateForm form)
         {
             if (!ModelState.IsValid)
                 return BadRequest();

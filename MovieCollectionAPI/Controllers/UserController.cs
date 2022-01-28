@@ -49,7 +49,7 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="form">an object containing the new details to update</param>
         /// <returns>Ok if succeed, bad request if not</returns>
         [HttpPut("updateDetails/{id}")]
-        public IActionResult UpdateUserDetails([FromRoute] Guid id, [FromBody] UpdateUserForm form)
+        public IActionResult UpdateUserDetails([FromRoute] Guid id, [FromBody] UserUpdateForm form)
         {
             if (!ModelState.IsValid)
                 return BadRequest();

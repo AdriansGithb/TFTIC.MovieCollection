@@ -45,15 +45,15 @@ namespace MovieCollectionAPI.Controllers
         /// <summary>
         /// Registers a new country in db
         /// </summary>
-        /// <param name="Name">The name of the new country</param>
+        /// <param name="form">The name of the new country</param>
         /// <returns>Ok or BadRequest</returns>
         [HttpPost]
-        public IActionResult Create(string Name)
+        public IActionResult Create(CountryCreationForm form)
         {
-            if (string.IsNullOrWhiteSpace(Name)) return BadRequest();
-            if (!_cntryRepo.Create(Name)) return BadRequest("Erreur d'insertion");
+            if (!ModelState.IsValid) return BadRequest();
+            if (!_cntryRepo.Create(form.Name)) return BadRequest("Erreur d'insertion");
 
-            return Ok("Pays créé");
+            return Ok();
         }
         /// <summary>
         /// Updates the name of a country
@@ -61,21 +61,21 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="Id">The id of the country to update</param>
         /// <param name="newName">the new name of the country</param>
         /// <returns>Ok if update succeeded or new country created; BadRequest if error;</returns>
-        [HttpPut("{Id}")]
-        public IActionResult Update([FromRoute] int Id, [FromBody] string newName)
+        [HttpPut]
+        public IActionResult Update(CountryUpdateForm form)
         {
-            if (string.IsNullOrWhiteSpace(newName)) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest();
 
-            if (_cntryRepo.GetById(Id) == null)
+            if (_cntryRepo.GetById(form.IdCountry) == null)
             {
-                _cntryRepo.Create(newName);
+                _cntryRepo.Create(form.NewName);
                 return Ok("Pays créé");
             }
 
-            if (!_cntryRepo.Update(new Country(){IdCountry = Id, Name = newName }.toDal())) 
+            if (!_cntryRepo.Update(new Country(){IdCountry = form.IdCountry, Name = form.NewName }.toDal())) 
                 return BadRequest("Mise à jour interrompue");
 
-            return Ok("Update Ok");
+            return Ok();
         }
         /// <summary>
         /// Deletes a country in db

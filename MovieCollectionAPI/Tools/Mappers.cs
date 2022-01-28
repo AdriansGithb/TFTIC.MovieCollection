@@ -171,7 +171,7 @@ namespace MovieCollectionAPI.Tools
                 Name = form.Name
             };
         }
-        public static DAL.AppUser toDal(this WEB.UpdateUserForm form, Guid id)
+        public static DAL.AppUser toDal(this WEB.UserUpdateForm form, Guid id)
         {
             return new DAL.AppUser
             {
@@ -221,7 +221,7 @@ namespace MovieCollectionAPI.Tools
                 CreatedBy = form.CreatedBy
             };
         }
-        public static DAL.Comment toDal(this WEB.UpdateCommentForm form)
+        public static DAL.Comment toDal(this WEB.CommentUpdateForm form)
         {
             return new DAL.Comment
             {

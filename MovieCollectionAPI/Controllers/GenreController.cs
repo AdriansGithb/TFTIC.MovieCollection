@@ -44,16 +44,16 @@ namespace MovieCollectionAPI.Controllers
         /// <summary>
         /// Registers a new genre in db
         /// </summary>
-        /// <param name="Label">The name of the new genre</param>
+        /// <param name="form">The name of the new genre</param>
         /// <returns>Ok or BadRequest</returns>
         [HttpPost]
-        public IActionResult Create(string Label)
+        public IActionResult Create(GenreCreationForm form)
         {
-            if (string.IsNullOrWhiteSpace(Label)) return BadRequest();
-            if (!_genrRepo.Create(Label))
+            if (!ModelState.IsValid) return BadRequest();
+            if (!_genrRepo.Create(form.Label))
                 return BadRequest("Erreur d'insertion");
 
-            return Ok("Genre créé");
+            return Ok();
         }
         /// <summary>
         /// Updates the name of a genre
@@ -61,22 +61,22 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="Id">The id of the genre to update</param>
         /// <param name="newLabel">the new name of the genre</param>
         /// <returns>Ok if update succeeded or new genre created; BadRequest if error;</returns>
-        [HttpPut("{Id}")]
-        public IActionResult Update([FromRoute] int Id, [FromBody] string newLabel)
+        [HttpPut]
+        public IActionResult Update(GenreUpdateForm form)
         {
-            if (string.IsNullOrWhiteSpace(newLabel))
+            if (!ModelState.IsValid)
                 return BadRequest();
 
-            if (_genrRepo.GetById(Id) == null)
+            if (_genrRepo.GetById(form.IdGenre) == null)
             {
-                _genrRepo.Create(newLabel);
+                _genrRepo.Create(form.NewLabel);
                 return Ok("Genre créé");
             }
 
-            if (!_genrRepo.Update(new Genre() { IdGenre = Id, Label = newLabel }.toDal()))
+            if (!_genrRepo.Update(new Genre() { IdGenre = form.IdGenre, Label = form.NewLabel }.toDal()))
                 return BadRequest("Mise à jour interrompue");
 
-            return Ok("Update Ok");
+            return Ok();
         }
         /// <summary>
         /// Deletes a genre in db

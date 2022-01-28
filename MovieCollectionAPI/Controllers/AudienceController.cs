@@ -44,16 +44,16 @@ namespace MovieCollectionAPI.Controllers
         /// <summary>
         /// Registers a new audience in db
         /// </summary>
-        /// <param name="Label">The name of the new audience</param>
+        /// <param name="form">The name of the new audience</param>
         /// <returns>Ok or BadRequest</returns>
         [HttpPost]
-        public IActionResult Create(string Label)
+        public IActionResult Create(AudienceCreationForm form)
         {
-            if (string.IsNullOrWhiteSpace(Label)) return BadRequest();
-            if (!_audRepo.Create(Label))
+            if (!ModelState.IsValid) return BadRequest();
+            if (!_audRepo.Create(form.Label))
                 return BadRequest("Erreur d'insertion");
 
-            return Ok("Audience créée");
+            return Ok();
         }
         /// <summary>
         /// Updates the name of an audience
@@ -61,22 +61,21 @@ namespace MovieCollectionAPI.Controllers
         /// <param name="Id">The id of the audience to update</param>
         /// <param name="newLabel">the new name of the audience</param>
         /// <returns>Ok if update succeeded or new audience created; BadRequest if error;</returns>
-        [HttpPut("{Id}")]
-        public IActionResult Update([FromRoute] int Id, [FromBody] string newLabel)
+        [HttpPut]
+        public IActionResult Update(AudienceUpdateForm form)
         {
-            if (string.IsNullOrWhiteSpace(newLabel))
-                return BadRequest();
+            if (!ModelState.IsValid) return BadRequest();
 
-            if (_audRepo.GetById(Id) == null)
+            if (_audRepo.GetById(form.IdAudience) == null)
             {
-                _audRepo.Create(newLabel);
-                return Ok("Audience créée");
+                _audRepo.Create(form.NewLabel);
+                return Ok();
             }
 
-            if (!_audRepo.Update(new Audience() { IdAudience = Id, Label = newLabel }.toDal()))
+            if (!_audRepo.Update(new Audience() { IdAudience = form.IdAudience, Label = form.NewLabel }.toDal()))
                 return BadRequest("Mise à jour interrompue");
 
-            return Ok("Update Ok");
+            return Ok();
         }
         /// <summary>
         /// Deletes an audience in db
