@@ -52,7 +52,7 @@ namespace MovieCollectionAPI.Controllers
             if (!ModelState.IsValid) return BadRequest();
             if (!_artRepo.Create(form.toDal())) return BadRequest("Erreur d'insertion");
 
-            return Ok("Artiste créé");
+            return Ok();
         }
         /// <summary>
         /// Updates an existing artist
@@ -68,13 +68,13 @@ namespace MovieCollectionAPI.Controllers
             if (_artRepo.GetById(Id) == null)
             {
                 _artRepo.Create(form.toDal());
-                return Ok("Artiste créé");
+                return Ok();
             }
 
             if (!_artRepo.Update(Id, form.toDal()))
                 return BadRequest("Mise à jour interrompue");
 
-            return Ok("Update Ok");
+            return Ok();
         }
         /// <summary>
         /// Deltes an artist in db
